@@ -1,0 +1,13 @@
+﻿@model IEnumerable<BlogProject.Models.Teacher>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>I would like to list teachers</h2>
+
+@foreach (var Teacher in Model)
+{
+    <h1>@Teacher.TeacherFName</h1>
+    <h2>@Teacher.TeacherLName</h2>
+}
