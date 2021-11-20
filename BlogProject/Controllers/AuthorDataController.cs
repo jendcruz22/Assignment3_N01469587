@@ -44,7 +44,7 @@ namespace BlogProject.Controllers
             List<String> AuthorNames = new List<string>{};
 
             //Loop Through Each Row the Result Set
-            while (ResultSet.Read())s
+            while (ResultSet.Read())
             {
                 //Access Column information by the DB column name as an index
                 string AuthorName = ResultSet["authorfname"] + " " + ResultSet["authorlname"];
