@@ -9,24 +9,31 @@ namespace BlogProject.Controllers
 {
     public class StudentController : Controller
     {
-        // GET: Student/List
+        // GET: Student
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        // GET: /Student/List
         [HttpGet]
-        public ActionResult List()
+        public ActionResult List(string SearchKey = null)
         {
             //this class will help us gather information from the db
-            StudentDataController Controller = new StudentDataController();
-            IEnumerable<Student> Students = (IEnumerable<Student>)Controller.ListStudents();
+            StudentDataController controller = new StudentDataController();
+            IEnumerable<Student> Students = controller.ListStudents(SearchKey);
             return View(Students);
         }
 
-        // GET : Student/Show/{id}
+        // GET : /Student/Show/{id}
         [HttpGet]
         [Route("Student/Show/{id}")]
         public ActionResult Show(int id)
         {
-            StudentDataController Controller = new StudentDataController();
-            Student SelectedStudent = Controller.FindStudent(id);
-            return View(SelectedStudent);
+            StudentDataController controller = new StudentDataController();
+            Student NewStudent = controller.FindStudent(id);
+
+            return View(NewStudent);
         }
     }
 }

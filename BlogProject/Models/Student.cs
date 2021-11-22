@@ -9,12 +9,11 @@ namespace BlogProject.Models
     {
 
         //What describes an author?
-        public int StudentId { get; set;  }
+        public int StudentId;
 
-        public string StudentFName { get; set; }
+        public string StudentFName;
 
-        public string StudentLName { get; set; }
-
+        public string StudentLName;
 
     }
 }

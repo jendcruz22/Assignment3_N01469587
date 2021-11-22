@@ -1,9 +1,11 @@
-﻿@Model BlogProject.Models.Student
+﻿@@Model BlogProject.Models.Student
 
 @{
     ViewBag.Title = "Show";
 }
 
-<h2>@Model.StudentFName</h2>
-<h3>@Model.StudentLName</h3>
-
+<a class="navlink" href="/Student/List">Back To Students</a>
+<div id="containershow">
+    <h2>@Model.StudentFName @Model.StudentLName</h2>
+    <p>@Model.StudentId</p>
+</div>

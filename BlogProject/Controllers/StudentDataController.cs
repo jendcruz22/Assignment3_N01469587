@@ -13,7 +13,7 @@ namespace BlogProject.Controllers
     {
         // The database context class which allows us to access our MySQL Database.
         private SchoolDbContext School = new SchoolDbContext();
-        
+
         //This Controller Will access the Students table of our school database.
         /// <summary>
         /// Returns a list of Students in the system
@@ -23,7 +23,7 @@ namespace BlogProject.Controllers
         /// A list of Students (first names and last names)
         /// </returns>
         [HttpGet]
-        public IEnumerable<string> ListStudents()
+        public IEnumerable<Student> ListStudents(string searchKey)
         {
             //Create an instance of a connection
             MySqlConnection Conn = School.AccessDatabase();
@@ -41,22 +41,31 @@ namespace BlogProject.Controllers
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             //Create an empty list of Student Names
-            List<String> StudentNames = new List<string>{};
+            List<Student> Students = new List<Student> { };
 
             //Loop Through Each Row the Result Set
             while (ResultSet.Read())
             {
+
                 //Access Column information by the DB column name as an index
-                string StudentName = ResultSet["studentfname"] + " " + ResultSet["studentlname"];
+                int StudentId = Convert.ToInt32(ResultSet["studentid"]);
+                string StudentFName = ResultSet["studentfname"].ToString();
+                string StudentLName = ResultSet["studentlname"].ToString();
+
+                Student NewStudent = new Student();
+                NewStudent.StudentId = StudentId;
+                NewStudent.StudentFName = StudentFName;
+                NewStudent.StudentLName = StudentLName;
+
                 //Add the Student Name to the List
-                StudentNames.Add(StudentName);
+                Students.Add(NewStudent);
             }
 
             //Close the connection between the MySQL Database and the WebServer
             Conn.Close();
 
             //Return the final list of Student names
-            return StudentNames;
+            return Students;
         }
 
         /// <summary>
@@ -70,8 +79,8 @@ namespace BlogProject.Controllers
         public Student FindStudent(int id)
         {
             //when we want to contact the database, use a query
-            string query = "select * from students where studentid=" + id;
 
+            Student NewStudent = new Student();
 
             //accessing the database through connection string
             MySqlConnection Conn = School.AccessDatabase();
@@ -83,24 +92,24 @@ namespace BlogProject.Controllers
             MySqlCommand Cmd = Conn.CreateCommand();
 
             //setting the command query to the string we generated in query variable
-            Cmd.CommandText = query;
+            Cmd.CommandText = "Select * from teachers where teacherid = " + id;
 
             //read through the results for our query
             MySqlDataReader ResultSet = Cmd.ExecuteReader();
 
-            Student SelectedStudent = new Student();
-
             //iterating through our results -- even if there is one one
             while (ResultSet.Read())
             {
-                SelectedStudent.StudentFName = ResultSet["studentfname"].ToString();
-                SelectedStudent.StudentLName = ResultSet["studentlname"].ToString();
-                SelectedStudent.StudentId = Convert.ToInt32(ResultSet["studentid"]);
+                int StudentId = Convert.ToInt32(ResultSet["studentid"]);
+                string StudentFName = ResultSet["studentfname"].ToString();
+                string StudentLName = ResultSet["studentlname"].ToString();
+
+                NewStudent.StudentId = StudentId;
+                NewStudent.StudentFName = StudentFName;
+                NewStudent.StudentLName = StudentLName;
             }
 
-            Conn.Close();
-
-            return SelectedStudent;
+            return NewStudent;
         }
 
     }
