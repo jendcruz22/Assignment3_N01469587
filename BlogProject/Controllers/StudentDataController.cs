@@ -23,7 +23,7 @@ namespace BlogProject.Controllers
         /// A list of Students (first names and last names)
         /// </returns>
         [HttpGet]
-        public IEnumerable<Student> ListStudents(string searchKey)
+        public IEnumerable<Student> ListStudents(string SearchKey=null)
         {
             //Create an instance of a connection
             MySqlConnection Conn = School.AccessDatabase();
@@ -35,7 +35,10 @@ namespace BlogProject.Controllers
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Select * from students";
+            cmd.CommandText = "Select * from students where lower(studentfname) like lower(@key) or lower(studentlname) like lower(@key) or lower(concat(studentfname, ' ', studentlname)) like lower(@key)";
+
+            cmd.Parameters.AddWithValue("@key", "%" + SearchKey + "%");
+            cmd.Prepare();
 
             //Gather Result Set of Query into a variable
             MySqlDataReader ResultSet = cmd.ExecuteReader();
@@ -92,7 +95,9 @@ namespace BlogProject.Controllers
             MySqlCommand Cmd = Conn.CreateCommand();
 
             //setting the command query to the string we generated in query variable
-            Cmd.CommandText = "Select * from teachers where teacherid = " + id;
+            Cmd.CommandText = "Select * from students where studentid = @id";
+            Cmd.Parameters.AddWithValue("@id", id);
+            Cmd.Prepare();
 
             //read through the results for our query
             MySqlDataReader ResultSet = Cmd.ExecuteReader();
