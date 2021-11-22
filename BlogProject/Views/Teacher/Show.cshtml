@@ -4,6 +4,12 @@
     ViewBag.Title = "Show";
 }
 
-<h2>@Model.TeacherFName</h2>
-<h3>@Model.TeacherLName</h3>
+<a class="navlink" href="/Teacher/List">Back To Teachers</a>
+<div id="containershow">
+    <h2>@Model.TeacherFName @Model.TeacherLName</h2>
+    <p>@Model.TeacherId</p>
+    <p>@Model.EmployeeNumber</p>
+    <p>@Model.HireDate</p>
+    <p>@Model.Salary</p>
+</div>
 

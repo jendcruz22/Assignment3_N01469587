@@ -15,7 +15,7 @@ namespace BlogProject.Controllers
         {
             //this class will help us gather information from the db
             StudentDataController Controller = new StudentDataController();
-            IEnumerable<Student> Students = Controller.ListStudents();
+            IEnumerable<Student> Students = (IEnumerable<Student>)Controller.ListStudents();
             return View(Students);
         }
 

@@ -23,7 +23,7 @@ namespace BlogProject.Controllers
         /// A list of teachers (first names and last names)
         /// </returns>
         [HttpGet]
-        public IEnumerable<string> ListTeachers()
+        public IEnumerable<Teacher> ListTeachers(string searchKey)
         {
             //Create an instance of a connection
             MySqlConnection Conn = School.AccessDatabase();
@@ -41,22 +41,37 @@ namespace BlogProject.Controllers
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
             //Create an empty list of Teacher Names
-            List<String> TeacherNames = new List<string>{};
+            List<Teacher> Teachers = new List<Teacher>{};
 
             //Loop Through Each Row the Result Set
             while (ResultSet.Read())
             {
+
                 //Access Column information by the DB column name as an index
-                string TeacherName = ResultSet["teacherfname"] + " " + ResultSet["teacherlname"];
+                int TeacherId = (int)ResultSet["teacherid"];
+                string TeacherFName = ResultSet["teacherfname"].ToString();
+                string TeacherLName = ResultSet["teacherlname"].ToString();
+                string EmployeeNumber = ResultSet["employeenumber"].ToString();
+                DateTime HireDate = (DateTime)ResultSet["hiredate"];
+                decimal Salary = (Decimal)ResultSet["salary"];
+
+                Teacher NewTeacher = new Teacher();
+                NewTeacher.TeacherId = TeacherId;
+                NewTeacher.TeacherFName = TeacherFName;
+                NewTeacher.TeacherLName = TeacherLName;
+                NewTeacher.EmployeeNumber = EmployeeNumber;
+                NewTeacher.HireDate = HireDate;
+                NewTeacher.Salary = Salary;
+
                 //Add the Teacher Name to the List
-                TeacherNames.Add(TeacherName);
+                Teachers.Add(NewTeacher);
             }
 
             //Close the connection between the MySQL Database and the WebServer
             Conn.Close();
 
             //Return the final list of teacher names
-            return TeacherNames;
+            return Teachers;
         }
 
         /// <summary>
@@ -70,8 +85,8 @@ namespace BlogProject.Controllers
         public Teacher FindTeacher(int id)
         {
             //when we want to contact the database, use a query
-            string query = "select * from teachers where teacherid=" + id;
 
+            Teacher NewTeacher = new Teacher();
 
             //accessing the database through connection string
             MySqlConnection Conn = School.AccessDatabase();
@@ -83,28 +98,31 @@ namespace BlogProject.Controllers
             MySqlCommand Cmd = Conn.CreateCommand();
 
             //setting the command query to the string we generated in query variable
-            Cmd.CommandText = query;
+            Cmd.CommandText = "Select * from teachers where teacherid = " + id;
 
             //read through the results for our query
             MySqlDataReader ResultSet = Cmd.ExecuteReader();
 
-            Teacher SelectedTeacher = new Teacher();
-
             //iterating through our results -- even if there is one one
             while (ResultSet.Read())
             {
-                SelectedTeacher.TeacherFName = ResultSet["teacherfname"].ToString();
-                SelectedTeacher.TeacherLName = ResultSet["teacherlname"].ToString();
-                SelectedTeacher.TeacherId = Convert.ToInt32(ResultSet["teacherid"]);
-                SelectedTeacher.EmployeeNumber = ResultSet["employeenumber"].ToString();
-                SelectedTeacher.HireDate = (DateTime)ResultSet["hiredate"];
-                SelectedTeacher.Salary = (decimal)ResultSet["salary"];
+                int TeacherId = (int)ResultSet["teacherid"];
+                string TeacherFName = ResultSet["teacherfname"].ToString();
+                string TeacherLName = ResultSet["teacherlname"].ToString();
+                string EmployeeNumber = ResultSet["employeenumber"].ToString();
+                DateTime HireDate = (DateTime)ResultSet["hiredate"];
+                decimal Salary = (Decimal)ResultSet["salary"];
+
+                NewTeacher.TeacherId = TeacherId;
+                NewTeacher.TeacherFName = TeacherFName;
+                NewTeacher.TeacherLName = TeacherLName;
+                NewTeacher.EmployeeNumber = EmployeeNumber;
+                NewTeacher.HireDate = HireDate;
+                NewTeacher.Salary = Salary;
  
             }
 
-            Conn.Close();
-
-            return SelectedTeacher;
+            return NewTeacher;
         }
 
     }

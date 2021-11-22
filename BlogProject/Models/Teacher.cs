@@ -9,17 +9,17 @@ namespace BlogProject.Models
     {
 
         //What describes an author?
-        public int TeacherId { get; set;  }
+        public int TeacherId;
 
-        public string TeacherFName { get; set; }
+        public string TeacherFName;
 
-        public string TeacherLName { get; set; }
+        public string TeacherLName;
 
-        public string EmployeeNumber { get; set; }
+        public string EmployeeNumber;
 
-        public DateTime HireDate { get; set; }
+        public DateTime HireDate;
 
-        public decimal Salary { get; set; }
+        public decimal Salary;
 
     }
 }
