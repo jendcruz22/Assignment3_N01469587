@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BlogProject.Models;
+using System.Diagnostics;
 
 namespace BlogProject.Controllers
 {
@@ -50,6 +51,33 @@ namespace BlogProject.Controllers
         {
             TeacherDataController controller = new TeacherDataController();
             controller.DeleteTeacher(id);
+            return RedirectToAction("List");
+        }
+
+        // GET : /Teacher/New
+        public ActionResult New()
+        {
+            return View();
+        }
+
+        // POST : /Teacher/Create
+        [HttpPost]
+        public ActionResult Create(string TeacherFName, string TeacherLName, string EmployeeNumber)
+        {
+            //Identify this method is running 
+            //Identify the inputs provided from the form
+
+            Debug.WriteLine("I have accessed the Create Method!");
+            Debug.WriteLine(TeacherFName);
+
+            Teacher NewTeacher = new Teacher();
+            NewTeacher.TeacherFName = TeacherFName;
+            NewTeacher.TeacherLName = TeacherLName;
+            NewTeacher.EmployeeNumber = EmployeeNumber;
+
+            TeacherDataController controller = new TeacherDataController();
+            controller.AddTeacher(NewTeacher);
+
             return RedirectToAction("List");
         }
     }

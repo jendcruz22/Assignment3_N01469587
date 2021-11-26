@@ -151,5 +151,29 @@ namespace BlogProject.Controllers
             Conn.Close();
         }
 
+        [HttpPost]
+        public void AddTeacher(Teacher NewTeacher)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = "insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values (@TeacherFName, @TeacherLName, @EmployeeNumber, CURRENT_DATE(), 22.23)";
+            cmd.Parameters.AddWithValue("@TeacherFName", NewTeacher.TeacherFName);
+            cmd.Parameters.AddWithValue("@TeacherLName", NewTeacher.TeacherLName); 
+            cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber); 
+
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+        }
     }
 }
