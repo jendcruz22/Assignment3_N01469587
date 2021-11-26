@@ -54,16 +54,12 @@ namespace BlogProject.Controllers
                 string TeacherFName = ResultSet["teacherfname"].ToString();
                 string TeacherLName = ResultSet["teacherlname"].ToString();
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
-                DateTime HireDate = (DateTime)ResultSet["hiredate"];
-                decimal Salary = (Decimal)ResultSet["salary"];
 
                 Teacher NewTeacher = new Teacher();
                 NewTeacher.TeacherId = TeacherId;
                 NewTeacher.TeacherFName = TeacherFName;
                 NewTeacher.TeacherLName = TeacherLName;
                 NewTeacher.EmployeeNumber = EmployeeNumber;
-                NewTeacher.HireDate = HireDate;
-                NewTeacher.Salary = Salary;
 
                 //Add the Teacher Name to the List
                 Teachers.Add(NewTeacher);
@@ -114,19 +110,45 @@ namespace BlogProject.Controllers
                 string TeacherFName = ResultSet["teacherfname"].ToString();
                 string TeacherLName = ResultSet["teacherlname"].ToString();
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
-                DateTime HireDate = (DateTime)ResultSet["hiredate"];
-                decimal Salary = (Decimal)ResultSet["salary"];
+                // DateTime HireDate = (DateTime)ResultSet["hiredate"];
+                // decimal Salary = (Decimal)ResultSet["salary"];
 
                 NewTeacher.TeacherId = TeacherId;
                 NewTeacher.TeacherFName = TeacherFName;
                 NewTeacher.TeacherLName = TeacherLName;
                 NewTeacher.EmployeeNumber = EmployeeNumber;
-                NewTeacher.HireDate = HireDate;
-                NewTeacher.Salary = Salary;
+                // NewTeacher.HireDate = HireDate;
+                // NewTeacher.Salary = Salary;
  
             }
 
             return NewTeacher;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <example> POST : /api/AuthorData/DeleteAuthor/3</example>
+        [HttpPost]
+        public void DeleteTeacher(int id)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = "Delete from teachers where teacherid=@id";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
         }
 
     }
