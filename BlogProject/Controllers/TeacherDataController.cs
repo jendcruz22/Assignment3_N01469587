@@ -111,14 +111,14 @@ namespace BlogProject.Controllers
                 string TeacherLName = ResultSet["teacherlname"].ToString();
                 string EmployeeNumber = ResultSet["employeenumber"].ToString();
                 // DateTime HireDate = (DateTime)ResultSet["hiredate"];
-                // decimal Salary = (Decimal)ResultSet["salary"];
+                decimal Salary = (Decimal)ResultSet["salary"];
 
                 NewTeacher.TeacherId = TeacherId;
                 NewTeacher.TeacherFName = TeacherFName;
                 NewTeacher.TeacherLName = TeacherLName;
                 NewTeacher.EmployeeNumber = EmployeeNumber;
                 // NewTeacher.HireDate = HireDate;
-                // NewTeacher.Salary = Salary;
+                NewTeacher.Salary = Salary;
  
             }
 
@@ -163,10 +163,11 @@ namespace BlogProject.Controllers
             //Establish a new command (query) for our database
             MySqlCommand cmd = Conn.CreateCommand();
 
-            cmd.CommandText = "insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values (@TeacherFName, @TeacherLName, @EmployeeNumber, CURRENT_DATE(), 22.23)";
+            cmd.CommandText = "insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values (@TeacherFName, @TeacherLName, @EmployeeNumber, CURRENT_DATE(), @Salary)";
             cmd.Parameters.AddWithValue("@TeacherFName", NewTeacher.TeacherFName);
             cmd.Parameters.AddWithValue("@TeacherLName", NewTeacher.TeacherLName); 
-            cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber); 
+            cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@Salary", NewTeacher.Salary);
 
             cmd.Prepare();
 

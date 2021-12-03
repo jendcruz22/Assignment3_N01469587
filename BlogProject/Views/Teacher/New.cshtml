@@ -3,6 +3,12 @@
     ViewBag.Title = "New";
 }
 
+<div id="containershow">
+    <nav>
+        <a class="navlink" href="/Teacher/List">Back To Teachers</a>
+    </nav>
+</div>
+
 <h2>New Teacher</h2>
 
 <form method="POST" action="/Teacher/Create">
@@ -17,6 +23,10 @@
     <div>
         <label for="EmployeeNumber">Employee Number: </label>
         <input type="text" name="EmployeeNumber" id="EmployeeNumber" />
+    </div>
+    <div>
+        <label for="Salary">Salary: </label>
+        <input type="text" name="Salary" id="Salary" />
     </div>
     <div>
         <input type="submit" value="Create Teacher" />

@@ -62,7 +62,7 @@ namespace BlogProject.Controllers
 
         // POST : /Teacher/Create
         [HttpPost]
-        public ActionResult Create(string TeacherFName, string TeacherLName, string EmployeeNumber)
+        public ActionResult Create(string TeacherFName, string TeacherLName, string EmployeeNumber, decimal Salary)
         {
             //Identify this method is running 
             //Identify the inputs provided from the form
@@ -74,6 +74,7 @@ namespace BlogProject.Controllers
             NewTeacher.TeacherFName = TeacherFName;
             NewTeacher.TeacherLName = TeacherLName;
             NewTeacher.EmployeeNumber = EmployeeNumber;
+            NewTeacher.Salary = Salary;
 
             TeacherDataController controller = new TeacherDataController();
             controller.AddTeacher(NewTeacher);
