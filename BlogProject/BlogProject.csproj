@@ -206,7 +206,6 @@
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Controllers\StudentDataController.cs" />
     <Compile Include="Controllers\TeacherDataController.cs" />
-    <Compile Include="Controllers\AuthorDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -274,6 +273,7 @@
     <Content Include="Views\Student\Show.cshtml" />
     <Content Include="Views\Teacher\DeleteConfirm.cshtml" />
     <Content Include="Views\Teacher\New.cshtml" />
+    <Content Include="Views\Teacher\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
